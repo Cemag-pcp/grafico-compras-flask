@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gráfico Plotly</title>
+</head>
+<body>
+    <h1>Selecione um Grupo</h1>
+    
+    <form action="/" method="POST">
+        <label>Grupo:</label>
+        <select name="grupo">
+            {% for grupo in listaGrupos %}
+                <option>{{grupo}}</option>
+            {% endfor %}
+        </select>
+
+        <label>Produto:</label>
+        <select name="produto">
+            {% for produto in listaProdutos %}
+                <option>{{produto}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Filtrar">
+    </form>
+
+    <form action="/resetar-cache" method="POST">
+        <label>Atualizar dados:</label>
+        <button type="submit">Atualizar</button>
+    </form>
+
+
+    <h1>Gráficos de: {{nome_grupo}}</h1>
+
+    <div class="row">
+        {% for grafico in graficos %}
+            <div class="col-md-6">
+                {{ grafico | safe }}
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
