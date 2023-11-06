@@ -21,6 +21,7 @@
             {% endfor %}
         </select>
         <input type="submit" value="Filtrar">
+
     </form>
 
     <form action="/resetar-cache" method="POST">
@@ -32,9 +33,37 @@
     <h1>Gráficos de: {{nome_grupo}}</h1>
 
     <div class="row">
-        {% for grafico in graficos %}
+        {% for grafico, tabela in graficos_tabelas %}
             <div class="col-md-6">
                 {{ grafico | safe }}
+            </div>
+            <div class="col-md-6">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Média 3M</th>
+                            <th>Estoque total</th>
+                            <th>DEE - Dias em Est.</th>
+                            <th>Prev.</th>
+                            <th>Simulação</th>
+                            <th>Consumo Diário</th>
+                            <th>Estoque Mínimo</th>
+                            <!-- <th colspan="2">Maior valor</th> -->
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ tabela[0][1] }}</td>
+                            <td>{{ tabela[0][2] }}</td>
+                            <td>{{ tabela[0][3] }}</td>
+                            <td>{{ tabela[0][4] }}</td>
+                            <td>{{ tabela[0][5] }}</td>
+                            <td>{{ tabela[0][7] }}</td>
+                            <td>{{ tabela[0][8] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         {% endfor %}
     </div>

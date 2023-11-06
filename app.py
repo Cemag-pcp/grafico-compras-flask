@@ -426,6 +426,7 @@ def gerar_graficos_grupo(selectGrupo):
     print(selectGrupo)
     
     graficos = []
+    tabelas = []
 
     # produto1='240471 - CILINDRO TELESCÓPICO CBH 6T 10 OC NV'
 
@@ -470,11 +471,14 @@ def gerar_graficos_grupo(selectGrupo):
 
         fig.update_layout(title={'text': titulo, 'x': 0.2}, xaxis_title='Data', xaxis_tickangle=45, yaxis_title='Valor', width=800, height=600, xaxis=dict(tickmode='array', tickvals=novos_rotulos, tickformat='%Y-%m-%d'))
 
-        # dfProdutos[dfProdutos['produto'] == produtosUnico[produto]]
-
+        tabela = dfProdutos[dfProdutos['produto'] == produtosUnico[produto]].values.tolist()
+        
+        tabelas.append(tabela)
         graficos.append(fig.to_html())
 
-    return graficos
+        graficos_tabelas = list(zip(graficos,tabelas))
+
+    return graficos_tabelas
 
 
 @cachetools.cached(cache_grupos)
@@ -508,6 +512,7 @@ def gerar_graficos_produto(selectProduto):
     """
 
     graficos = []
+    tabelas = []
 
     tbCorrigida, tabelaFinal, dfProdutos = tratamento()
 
@@ -546,11 +551,14 @@ def gerar_graficos_produto(selectProduto):
 
         fig.update_layout(title={'text': titulo, 'x': 0.2}, xaxis_title='Data', xaxis_tickangle=45, yaxis_title='Valor', width=800, height=600, xaxis=dict(tickmode='array', tickvals=novos_rotulos, tickformat='%Y-%m-%d'))
 
-        # dfProdutos[dfProdutos['produto'] == produtosUnico[produto]]
-
+        tabela = dfProdutos[dfProdutos['produto'] == produtosUnico[produto]].values.tolist()
+        
+        tabelas.append(tabela)
         graficos.append(fig.to_html())
+
+    graficos_tabelas = list(zip(graficos, tabelas))
     
-    return graficos
+    return graficos_tabelas
 
 
 @app.route('/', methods=['POST','GET'])
@@ -567,12 +575,12 @@ def plot():
 
     if selectProduto != 'Selecione':
 
-        graficos = gerar_graficos_produto(selectProduto)
+        graficos_tabelas = gerar_graficos_produto(selectProduto)
         nome_grupo = selectProduto
 
     elif selectGrupo != 'Selecione':
 
-        graficos = gerar_graficos_grupo(selectGrupo)
+        graficos_tabelas = gerar_graficos_grupo(selectGrupo)
         nome_grupo = selectGrupo
 
     listaGrupos = grupos()
@@ -582,7 +590,7 @@ def plot():
     listaProdutos = tbCorrigida['produto'].unique().tolist()
     listaProdutos.insert(0, 'Selecione')
     
-    return render_template("index.html", graficos=graficos, listaGrupos=listaGrupos,
+    return render_template("index.html", graficos_tabelas=graficos_tabelas, listaGrupos=listaGrupos,
                             listaProdutos=listaProdutos, nome_grupo=nome_grupo)
 
 
