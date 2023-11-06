@@ -23,6 +23,10 @@ cache_grupos = cachetools.LRUCache(maxsize=128)
 @cachetools.cached(cache_google_sheets)
 def tratamento():
 
+    """
+    Função para tratar as bases vinda do google sheets
+    """
+
     hoje = datetime.now()
     data_string = hoje.strftime('%Y-%m-%d')
 
@@ -316,6 +320,10 @@ def tratamento():
 @cachetools.cached(cache_google_sheets)
 def load_sheets():
 
+    """
+    Função para carregar as bases do google sheets
+    """
+
     filename = 'service_account.json'
 
     ## Conectando com google sheets e acessando testesGraficos
@@ -411,6 +419,10 @@ def resetar_cache():
 @cachetools.cached(cache_graficos)
 def gerar_graficos_grupo(selectGrupo):
 
+    """
+    Função para gerar gráficos com base no grupo escolhido
+    """
+
     print(selectGrupo)
     
     graficos = []
@@ -468,6 +480,10 @@ def gerar_graficos_grupo(selectGrupo):
 @cachetools.cached(cache_grupos)
 def grupos():
 
+    """
+    Função para carregar os grupos do arquivo "grupo.csv"
+    """
+
     dfGrupo = pd.read_csv('grupo.csv', sep=';') 
 
     tbGrupo = dfGrupo[['grupo']]
@@ -486,6 +502,10 @@ def grupos():
 
 @cachetools.cached(cache_graficos)
 def gerar_graficos_produto(selectProduto):
+
+    """
+    Função para gerar gráficos com base no produto escolhido
+    """
 
     graficos = []
 
@@ -535,6 +555,10 @@ def gerar_graficos_produto(selectProduto):
 
 @app.route('/', methods=['POST','GET'])
 def plot():
+
+    """
+    Rota para renderizar os gráficos gerados.
+    """
 
     selectGrupo = request.form.get('grupo')
     selectProduto = request.form.get('produto')
