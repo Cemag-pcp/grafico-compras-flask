@@ -1,9 +1,6 @@
 from flask import Flask, render_template,request, redirect, url_for
 
-import plotly.express as px
 import plotly.graph_objs as go
-import plotly.figure_factory as ff
-import matplotlib.pyplot as plt
 
 import pandas as pd
 import numpy as np
