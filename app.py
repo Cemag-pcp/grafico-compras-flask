@@ -353,7 +353,7 @@ def load_sheets():
     cabecalho = wks1.row_values(2)
 
     #tratando planilha Análise Previsão de Consumo (CMM / NTP ) DEE
-    dfSimulacao = dfSimulacao.set_axis(cabecalho, axis=1)
+    dfSimulacao = dfSimulacao.set_axis(cabecalho, axis=1, copy=False)
     dfSimulacao = dfSimulacao.iloc[2:]
 
     ## Conectando com google sheets e acessando Análise Previsão de Consumo (CMM / NTP ) DEE
@@ -372,7 +372,7 @@ def load_sheets():
     cabecalho = wks2.row_values(1)
     cabecalho = cabecalho[:28]
     #tratando planilha Análise Previsão de Consumo (CMM / NTP ) DEE
-    dfPedidos = dfPedidos.set_axis(cabecalho, axis=1)
+    dfPedidos = dfPedidos.set_axis(cabecalho, axis=1, copy=False)
     dfPedidos = dfPedidos.iloc[1:]
 
     ## Conectando com google sheets e acessando Análise Previsão de Consumo (CMM / NTP ) DEE
